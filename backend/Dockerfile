@@ -24,6 +24,7 @@ RUN dotnet publish "UndercutF1.Console.csproj" -o /app/publish /p:PublicRelease=
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
+COPY data /data
 
 # Environment variables for Render hosting
 ENV UNDERCUTF1_APIENABLED=true

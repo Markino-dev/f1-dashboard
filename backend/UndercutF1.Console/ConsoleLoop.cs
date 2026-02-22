@@ -6,6 +6,7 @@ using Spectre.Console;
 using Spectre.Console.Advanced;
 using Spectre.Console.Rendering;
 using UndercutF1.Console.Graphics;
+using UndercutF1.Data;
 
 namespace UndercutF1.Console;
 
@@ -16,6 +17,8 @@ public class ConsoleLoop(
     IHostApplicationLifetime hostApplicationLifetime,
     TerminalInfoProvider terminalInfo,
     IOptions<ConsoleOptions> options,
+    ILiveTimingClient liveTimingClient,
+    IJsonTimingClient jsonTimingClient,
     ILogger<ConsoleLoop> logger
 ) : BackgroundService
 {
@@ -49,6 +52,20 @@ public class ConsoleLoop(
 
         if (_headless)
         {
+            logger.LogInformation("Headless mode: Checking for sessions to auto-start...");
+            var directories = await jsonTimingClient.GetDirectoryNamesAsync();
+            if (directories.Any())
+            {
+                var latestSession = directories.First().Value.First();
+                logger.LogInformation("Auto-starting simulated session: {Session} from {Directory}", latestSession.Session, latestSession.Directory);
+                _ = jsonTimingClient.LoadSimulationDataAsync(latestSession.Directory, cancellationToken);
+            }
+            else
+            {
+                logger.LogInformation("No recorded sessions found. Auto-starting live timing...");
+                await liveTimingClient.StartAsync();
+            }
+
             // Just wait until cancelled if we are headless
             await Task.Delay(Timeout.Infinite, cancellationToken);
             return;
