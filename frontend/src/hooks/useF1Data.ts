@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import {
-    DriverListData,
+    DriverInfo,
+    DriverList,
     TimingData,
     MergedDriverData,
     TimingAppData,
@@ -12,7 +13,7 @@ const API_BASE = 'https://f1-dashboard-9k7e.onrender.com';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export function useF1Data() {
-    const { data: drivers, error: driverError } = useSWR<DriverListData>(
+    const { data: drivers, error: driverError } = useSWR<DriverList>(
         `${API_BASE}/data/DriverList/latest`,
         fetcher,
         { refreshInterval: 10000 }
@@ -45,7 +46,7 @@ export function useF1Data() {
     if (drivers && timing && timing.lines) {
         Object.keys(timing.lines).forEach((number) => {
             const timingLine = timing.lines[number];
-            const driverInfo = drivers.lines?.[number];
+            const driverInfo = drivers[number];
             const driverAppData = appData?.lines?.[number];
 
             mergedData.push({

@@ -13,11 +13,6 @@ export interface DriverList {
   [key: string]: DriverInfo;
 }
 
-export interface DriverListData {
-  liveTimingDataType: string;
-  lines: DriverList;
-}
-
 export interface Sector {
   value: string;
   overallFastest: boolean;

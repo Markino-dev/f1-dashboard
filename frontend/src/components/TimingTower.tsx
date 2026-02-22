@@ -35,7 +35,7 @@ export function TimingTower() {
     }
 
     return (
-        <div className="w-full max-w-6xl mx-auto overflow-hidden bg-black border border-zinc-800 rounded-lg shadow-2xl">
+        <div className="w-full max-w-7xl mx-auto overflow-hidden bg-black border border-zinc-800 rounded-lg shadow-2xl">
             <div className="bg-zinc-900 px-4 py-3 flex justify-between items-center border-b border-zinc-800">
                 <div className="flex items-center gap-4">
                     <span className="text-white font-black italic tracking-wider text-lg">TIMING TOWER</span>
@@ -51,13 +51,14 @@ export function TimingTower() {
             </div>
 
             <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse table-fixed">
+                <table className="w-full text-left border-collapse table-fixed min-w-[1000px]">
                     <thead>
                         <tr className="bg-zinc-900 text-zinc-500 text-[10px] uppercase tracking-widest border-b border-zinc-800">
                             <th className="px-3 py-2 font-black w-12 text-center">POS</th>
-                            <th className="px-3 py-2 font-black w-48">DRIVER</th>
+                            <th className="px-3 py-2 font-black w-44">DRIVER</th>
                             <th className="px-3 py-2 font-black w-24">LAST LAP</th>
-                            <th className="px-3 py-2 font-black w-20">GAP</th>
+                            <th className="px-3 py-2 font-black w-24">GAP</th>
+                            <th className="px-3 py-2 font-black w-24">INTERVAL</th>
                             <th className="px-3 py-2 font-black w-20 text-center">TYRE</th>
                             <th className="px-3 py-2 font-black w-20 text-center">S1</th>
                             <th className="px-3 py-2 font-black w-20 text-center">S2</th>
@@ -90,7 +91,7 @@ export function TimingTower() {
                                                 </span>
                                                 {item.isFastestLap && <span className="text-sm">⏱️</span>}
                                                 {item.inPit && (
-                                                    <span className="bg-red-600 text-white text-[9px] font-black px-1 rounded-sm animate-pulse tracking-tighter">PIT</span>
+                                                    <span className="bg-red-600 text-white text-[9px] font-black px-1 rounded-sm animate-pulse tracking-tighter shadow-[0_0_8px_rgba(220,38,38,0.5)]">PIT</span>
                                                 )}
                                             </div>
                                         </div>
@@ -102,7 +103,10 @@ export function TimingTower() {
                                         {item.lastLapTime?.value || '--'}
                                     </td>
                                     <td className="px-3 py-1 font-mono text-[11px] text-zinc-400 font-bold uppercase tracking-tighter">
-                                        {item.gapToLeader === "TOP" ? "INTERVAL" : (item.gapToLeader || '--')}
+                                        {item.gapToLeader === "TOP" ? "TOP" : (item.gapToLeader || '--')}
+                                    </td>
+                                    <td className="px-3 py-1 font-mono text-[11px] text-zinc-500 font-bold uppercase tracking-tighter">
+                                        {item.gapToLeader === "TOP" ? "--" : (item.intervalToPositionAhead?.value || '--')}
                                     </td>
                                     <td className="px-3 py-1">
                                         <div className="flex flex-col items-center justify-center leading-none">
@@ -121,7 +125,7 @@ export function TimingTower() {
                                         return (
                                             <td key={sIdx} className="px-2 py-1">
                                                 <div className={cn(
-                                                    "font-mono text-xs font-black text-center py-1 rounded-sm transition-colors",
+                                                    "font-mono text-[11px] font-black text-center py-1 rounded-sm transition-colors",
                                                     sector?.overallFastest ? "text-purple-400 bg-purple-400/10 shadow-[inset_0_0_10px_rgba(168,85,247,0.1)]" :
                                                         sector?.personalFastest ? "text-green-500 bg-green-500/10" :
                                                             sector?.value ? "text-yellow-500 bg-yellow-500/10" : "text-zinc-600 bg-zinc-800/20"
