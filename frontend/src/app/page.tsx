@@ -31,37 +31,8 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <section className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Timing Tower */}
-        <div className="lg:col-span-8">
-          <TimingTower />
-        </div>
-
-        {/* Right Column: Mini Stats (Placeholders for now) */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-lg">
-            <h3 className="text-zinc-400 font-black italic text-xs uppercase mb-4 tracking-wider">Race Control</h3>
-            <div className="space-y-3">
-              <div className="text-[11px] font-mono leading-relaxed text-zinc-500 border-l border-zinc-700 pl-3">
-                Waiting for messages...
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-lg">
-            <h3 className="text-zinc-400 font-black italic text-xs uppercase mb-4 tracking-wider">Weather</h3>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-black italic">CLOUDY</p>
-                <p className="text-zinc-500 text-[10px] uppercase font-bold">Track 24°C / Air 19°C</p>
-              </div>
-              <div className="text-zinc-700">
-                {/* Weather Icon Placeholder */}
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19c.7 0 1.3-.2 1.8-.7s.7-1.1.7-1.8c0-1.4-1.1-2.5-2.5-2.5-.1 0-.3 0-.4.1C16.5 11.8 14.4 10 12 10c-2.4 0-4.5 1.8-5.1 4.1-.1-.1-.3-.1-.4-.1-1.4 0-2.5 1.1-2.5 2.5 0 .7.3 1.3.7 1.8s1.1.7 1.8.7h11z" /></svg>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section className="max-w-7xl mx-auto">
+        <TimingTower />
       </section>
 
       <footer className="max-w-6xl mx-auto mt-24 pt-8 border-t border-zinc-900 flex justify-between items-center text-zinc-800 font-mono text-[10px]">
