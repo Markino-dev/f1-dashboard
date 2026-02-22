@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: f1-dashboard-backend
+    runtime: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    envVars:
+      - key: UNDERCUTF1_APIENABLED
+        value: "true"
+      - key: UNDERCUTF1_DATADIRECTORY
+        value: /data

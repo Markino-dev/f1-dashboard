@@ -1,0 +1,123 @@
+# F1 Dashboard Integration Plan (Free Hosting Edition)
+
+This plan outlines how to build and host a modern F1 Dashboard for **FREE** using `undercut-f1` as the data engine and Next.js as the UI.
+
+## Hosting Strategy (100% Free)
+
+We will use two specialized hosting services to keep everything free:
+1.  **Backend (Data Engine)**: Hosted on [Render.com](https://render.com/) using their **Free Web Service** tier. 
+    - It will run the `undercut-f1` code inside a Docker container.
+    - It exposes JSON endpoints for the frontend.
+2.  **Frontend (UI Dashboard)**: Hosted on [Vercel.com](https://vercel.com/) (Free Tier).
+    - Connects directly to your GitHub repository for automatic updates.
+
+## Proposed Changes
+
+### [Backend] undercut-f1 Web API
+
+To make this work as a cloud service:
+- **Dockerization**: Use the existing [Dockerfile](file:///d:/f1-dashboard/undercut-repo-temp/Dockerfile) in the repo, modified to start the API automatically.
+- **JSON Output**: The API already outputs clean JSON. We will provide instructions on how to access these endpoints from the web.
+- **Persistence**: Note that Render's free tier "sleeps" after 15 mins. You will need to open the backend URL once before the race to "wake it up."
+
+### [Frontend] Next.js Dashboard
+
+A sleek React-based dashboard optimized for Vercel.
+- **Data Fetching**: Uses standard `fetch()` to get JSON from your Render backend.
+- **Environment Variables**: Store your Render API URL in Vercel settings so the code remains clean and secure.
+
+---
+
+## Step-by-Step Backend Setup Guide (For Beginners)
+
+Since you have zero knowledge of backend setup, follow these exact steps (I will help you execute them):
+
+1.  **GitHub Repository**:
+    - We will create a single folder (`/backend`) containing the `undercut-f1` source code.
+    - We will add a `render.yaml` file that tells Render exactly how to build and run it.
+
+2.  **Render Deployment**:
+    - Sign up at [Render.com](https://render.com/) using your GitHub account.
+    - Click **"New +"** -> **"Web Service"**.
+    - Select your GitHub repo.
+    - **Runtime**: Select `Docker`.
+    - **Instance Type**: Select `Free`.
+    - **Environment Variables**: Add `UNDERCUTF1_APIENABLED=true`.
+
+3.  **Data Access (No Token Required)**:
+    - For the basic data (leaderboard, lap times, gaps, and tyres), no F1 TV subscription or access token is required. The backend will automatically fetch this data from the public stream.
+
+## Testing & Verification (No Live Session Needed)
+
+To ensure the application works perfectly even when there is no live race, we will use **Simulated Sessions**:
+
+1.  **Simulated Data**: The `undercut-f1` engine includes sample data (e.g., from the Suzuka 2025 race). 
+2.  **How to Test**:
+    - We will configure the backend to run in "Simulation Mode" by providing it with a pre-recorded session file.
+    - This will "play back" the race data as if it were happening live.
+    - You will be able to see the leaderboard update and timings change on your dashboard immediately.
+3.  **Local Dev View**: My step-by-step instructions will include how to run this simulation locally on your computer before you even push to GitHub, so you can see it working in real-time.
+
+## Verification Plan
+
+### Automated Verification
+- **GitHub Push**: Confirm files are correctly pushed to your account.
+- **Render Build**: Monitor the build logs to ensure the .NET app starts correctly.
+
+### Manual Verification
+- **Simulation Test**: Launch the backend in simulation mode and verify JSON is flowing.
+- **Frontend Check**: Open the dashboard and ensure it displays the simulated Suzuka data correctly.
+- **Production Check**: Access the Render/Vercel URLs to confirm the cloud setup is live.
+
+---
+
+## Phases of Development
+
+### Phase 1: Backend Preparation (Local)
+1.  **Structure the Repository**: Create a new GitHub repo with a `backend` folder containing the `undercut-f1` code.
+2.  **API Configuration**: Ensure the `undercutf1` tool is set to auto-start with `--with-api`.
+3.  **Docker Setup**: Update the `Dockerfile` to expose port `61937` (default API port).
+4.  **Simulation Data**: Copy a sample session (e.g., `Suzuka 2025`) into a `data` folder inside the backend for testing.
+
+### Phase 2: Cloud Backend Deployment (Render)
+1.  **GitHub Connection**: Connect your repo to Render.
+2.  **Web Service Setup**: Create a new Web Service (Docker runtime, Free tier).
+3.  **Environment Variables**:
+    - `UNDERCUTF1_APIENABLED=true`
+    - `UNDERCUTF1_DATADIRECTORY=/data`
+4.  **Test Deployment**: Visit your Render URL (e.g., `https://f1-api-xyz.onrender.com/data/TimingData/latest`) to confirm JSON is flowing.
+
+### Phase 3: Frontend Development (Local)
+1.  **Initialize Next.js**: Create a new app using `npx create-next-app@latest frontend`.
+2.  **UI Components**:
+    - Build the `TimingTower` table.
+    - Implement `SectorDisplay` for driver sector times.
+    - Add `GapDisplay` and `TyreIcon`.
+3.  **Data Integration**: Use `SWR` or `useEffect` to poll the Render API.
+4.  **F1 Theme Styling**: Apply the Carbon/Crimson/White theme with local CSS.
+
+### Phase 4: Frontend Deployment (Vercel)
+1.  **Project Import**: Connect your GitHub repo to Vercel.
+2.  **Environment Setup**: Add `NEXT_PUBLIC_API_URL` pointing to your Render backend.
+3.  **Deployment**: Vercel will automatically build and host your site.
+
+---
+
+## Complete Setup Instructions (For Beginners)
+
+### 1. Setting Up the Files
+- I will move the `undercut-f1` source code into a `backend/` directory in our workspace.
+- I will create a `frontend/` directory and initialize Next.js there.
+
+### 2. Preparing for GitHub
+- I will help you initialize a Git repository and provide the commands to push it to your private GitHub.
+
+### 3. Deploying to Render (Backend)
+- Go to Render.com -> New Web Service -> Link GitHub.
+- Use these settings:
+  - **Start Command**: `dotnet run --project UndercutF1.Console/UndercutF1.Console.csproj -- --with-api`
+  - (Or if using Docker, just select Docker as the runtime).
+
+### 4. Deploying to Vercel (Frontend)
+- Go to Vercel.com -> New Project -> Link GitHub.
+- Add Environment Variable: `NEXT_PUBLIC_API_URL` = `[Your Render URL]`.

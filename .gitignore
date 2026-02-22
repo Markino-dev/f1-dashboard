@@ -1,0 +1,33 @@
+# Root .gitignore
+
+# Node / Next.js
+node_modules/
+.next/
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# .NET / Build artifacts
+backend/bin/
+backend/obj/
+backend/*.user
+backend/UndercutF1.Data.Tests/
+
+# Rider / VS / VSCode
+.idea/
+.vs/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp / logs
+*.log
+logs/
+
+# undercut-f1 data directory (session recordings — don't commit, can be large)
+backend/data/
