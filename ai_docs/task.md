@@ -1,0 +1,45 @@
+- [x] Organize project documentation <!-- id: 16 -->
+    - [x] Create ai_docs folder and copy implementation plan <!-- id: 17 -->
+- [x] Phase 1: Backend Preparation (Local) <!-- id: 7 -->
+    - [x] Create backend and frontend folders <!-- id: 18 -->
+    - [x] Move undercut-f1 code to backend <!-- id: 19 -->
+    - [x] Create Dockerfile for Render <!-- id: 20 -->
+    - [x] Create render.yaml configuration <!-- id: 21 -->
+    - [x] Create root .gitignore and README.md <!-- id: 22 -->
+    - [x] Initialize and commit git repository <!-- id: 23 -->
+    - [x] Configure Git for markino-dev <!-- id: 29 -->
+    - [x] Push to GitHub <!-- id: 24 -->
+- [x] Phase 2: Cloud Backend Deployment (Render) <!-- id: 25 -->
+    - [x] Create GitHub repo and push code <!-- id: 26 -->
+    - [x] Deploy via Render.com (Auto-start simulation for verification) <!-- id: 27 -->
+    - [x] Verify JSON API is live (Confirmed Imola 2024 data flow) <!-- id: 28 -->
+- [x] Phase 3: Frontend Development (Local) <!-- id: 3 -->
+    - [x] Initialize Next.js project <!-- id: 29 -->
+    - [x] UI Components: TimingTower table (Names, Colors, Sector mapping) <!-- id: 30 -->
+- [x] Phase 4: Frontend Deployment (Vercel) <!-- id: 31 -->
+    - [x] Connect GitHub repo to Vercel <!-- id: 32 -->
+    - [x] Configure NEXT_PUBLIC_API_URL environment variable <!-- id: 33 -->
+- [x] Phase 5: Fixing UI and Data Connection <!-- id: 34 -->
+    - [x] Install and configure Tailwind CSS (Migrated to v4 syntax) <!-- id: 35 -->
+    - [x] Enable CORS on backend to allow data fetching <!-- id: 36 -->
+    - [x] Verify production dashboard visibility (Race is unfolding!) <!-- id: 37 -->
+- [x] Phase 6: Post-Deployment Fine-tuning <!-- id: 38 -->
+    - [x] Implement 'Broadcast' features (Tyres, Pit, Sectors, Lap Counter) <!-- id: 40 -->
+    - [x] Restore Driver Metadata & Interval columns <!-- id: 43 -->
+    - [x] Remove unused components (Race Control, Weather) <!-- id: 44 -->
+    - [x] Transition simulation to production-ready state <!-- id: 45 -->
+- [x] Research undercut-f1 repository <!-- id: 0 -->
+    - [x] Explore codebase and features <!-- id: 1 -->
+    - [x] Identify data sources (APIs/WebSockets) for leaderboard, sectors, gaps, and tyres <!-- id: 2 -->
+    - [x] Check for live timing and sector info <!-- id: 3 -->
+- [x] Evaluate integration feasibility <!-- id: 4 -->
+    - [x] Assess web app compatibility (Next.js/React preferred) <!-- id: 5 -->
+    - [x] Determine how to handle live data stream vs timing data <!-- id: 6 -->
+    - [x] Plan free hosting strategy (Render + Vercel) <!-- id: 11 -->
+    - [x] Confirm no-token requirement for basic data <!-- id: 14 -->
+    - [x] Incorporate simulated data for testing <!-- id: 15 -->
+- [x] Breakdown the building process <!-- id: 7 -->
+    - [x] Design simple clean UI for leaderboard and sector timings <!-- id: 8 -->
+    - [x] Plan JSON API structure from undercut-f1 to Next.js <!-- id: 12 -->
+    - [x] Create step-by-step backend setup guide for a beginner <!-- id: 13 -->
+- [x] Create implementation plan/report <!-- id: 10 -->
