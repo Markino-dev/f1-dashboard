@@ -59,6 +59,7 @@ public static partial class CommandHandler
             );
 
             builder.Services.AddRouting().AddEndpointsApiExplorer();
+            builder.Services.AddCors();
         }
 
         builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(x =>
@@ -77,6 +78,8 @@ public static partial class CommandHandler
             app.MapOpenApi();
 
             app.UseSwaggerUI(opts => opts.SwaggerEndpoint("/openapi/v1.json", "v1"));
+
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.MapControlEndpoints().MapTimingEndpoints();
         }
