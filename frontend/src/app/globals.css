@@ -1,16 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   body {
-    @apply bg-black text-white antialiased;
-    font-family: var(--font-geist-sans);
+    background-color: black;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 /* F1 Specific Typography */
-h1, h2, h3, .f1-font {
+h1,
+h2,
+h3,
+.f1-font {
   font-family: inherit;
   font-style: italic;
   text-transform: uppercase;
