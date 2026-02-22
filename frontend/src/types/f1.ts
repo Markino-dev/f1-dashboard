@@ -13,6 +13,11 @@ export interface DriverList {
   [key: string]: DriverInfo;
 }
 
+export interface DriverListData {
+  liveTimingDataType: string;
+  lines: DriverList;
+}
+
 export interface Sector {
   value: string;
   overallFastest: boolean;
@@ -62,6 +67,38 @@ export interface TimingData {
   };
 }
 
+export interface Stint {
+  lapFlags: number;
+  compound: string;
+  new: boolean;
+  totalLaps: number;
+  startLaps: number;
+  lapTime: string | null;
+}
+
+export interface TimingAppLine {
+  gridPos: string;
+  line: number;
+  stints: {
+    [key: string]: Stint;
+  };
+}
+
+export interface TimingAppData {
+  liveTimingDataType: string;
+  lines: {
+    [key: string]: TimingAppLine;
+  };
+}
+
+export interface LapCount {
+  liveTimingDataType: string;
+  currentLap: number;
+  totalLaps: number;
+}
+
 export interface MergedDriverData extends TimingLine {
   driver?: DriverInfo;
+  appData?: TimingAppLine;
+  isFastestLap?: boolean;
 }
