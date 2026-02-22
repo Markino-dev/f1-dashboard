@@ -30,12 +30,29 @@ public class ConsoleLoop(
     private int _slowFrameReports = 0;
     private SleepInhibitor? _sleepInhibitor;
 
+    private bool _headless = false;
+
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         // Immediately yield to ensure all the other hosted services start as expected
         await Task.Yield();
 
-        await SetupTerminalAsync(cancellationToken);
+        try
+        {
+            await SetupTerminalAsync(cancellationToken);
+        }
+        catch (Exception ex) when (ex.ToString().Contains("TerminalNotAttachedException"))
+        {
+            _headless = true;
+            logger.LogInformation("No terminal attached. Running in headless mode.");
+        }
+
+        if (_headless)
+        {
+            // Just wait until cancelled if we are headless
+            await Task.Delay(Timeout.Infinite, cancellationToken);
+            return;
+        }
 
         var contentPanel = new Panel("Undercut F1").Expand().RoundedBorder() as IRenderable;
         var layout = new Layout("Root").SplitRows(
@@ -139,19 +156,32 @@ public class ConsoleLoop(
             return;
         }
 
-        await Terminal.OutLineAsync("Exiting undercutf1...", CancellationToken.None);
-        logger.LogInformation("ConsoleLoop Stopping.");
+        if (!_headless)
+        {
+            try
+            {
+                await Terminal.OutLineAsync("Exiting undercutf1...", CancellationToken.None);
+                logger.LogInformation("ConsoleLoop Stopping.");
 
-        await Terminal.OutAsync(
-            ControlSequences.ClearScreen(ClearMode.Full),
-            CancellationToken.None
-        );
-        await Terminal.OutAsync(ControlSequences.SetCursorVisibility(true), CancellationToken.None);
-        Terminal.DisableRawMode();
-        await Terminal.OutAsync(
-            ControlSequences.SetScreenBuffer(ScreenBuffer.Main),
-            CancellationToken.None
-        );
+                await Terminal.OutAsync(
+                    ControlSequences.ClearScreen(ClearMode.Full),
+                    CancellationToken.None
+                );
+                await Terminal.OutAsync(
+                    ControlSequences.SetCursorVisibility(true),
+                    CancellationToken.None
+                );
+                Terminal.DisableRawMode();
+                await Terminal.OutAsync(
+                    ControlSequences.SetScreenBuffer(ScreenBuffer.Main),
+                    CancellationToken.None
+                );
+            }
+            catch
+            {
+                // Ignore errors during terminal cleanup, especially if we somehow became headless
+            }
+        }
 
         _sleepInhibitor?.ReleaseInhibition();
 

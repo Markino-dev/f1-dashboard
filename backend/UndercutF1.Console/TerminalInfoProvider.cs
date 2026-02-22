@@ -68,11 +68,18 @@ public sealed partial class TerminalInfoProvider
         IsSixelSupported = new Lazy<bool>(GetSixelSupported);
         IsSynchronizedOutputSupported = new Lazy<bool>(GetSynchronizedOutputSupported);
         TerminalSize = new Lazy<TerminalSizeInfo>(GetTerminalSize);
-        Terminal.Resized += (_new) =>
+        try
         {
-            TerminalSize = new Lazy<TerminalSizeInfo>(GetTerminalSize);
-            _ = TerminalSize.Value;
-        };
+            Terminal.Resized += (_new) =>
+            {
+                TerminalSize = new Lazy<TerminalSizeInfo>(GetTerminalSize);
+                _ = TerminalSize.Value;
+            };
+        }
+        catch (Exception ex) when (ex.ToString().Contains("TerminalNotAttachedException"))
+        {
+            _logger.LogInformation("No terminal attached. Terminal capability checks will be disabled.");
+        }
     }
 
     private bool GetIsITerm2ProtocolSupported()
