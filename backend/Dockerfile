@@ -32,5 +32,5 @@ ENV UNDERCUTF1_LOGDIRECTORY=/logs
 
 EXPOSE 61937
 
-# Start a live session with the API enabled
-ENTRYPOINT ["./undercutf1", "--with-api", "live"]
+# Start the engine with the API enabled. Live mode is the default.
+ENTRYPOINT ["./undercutf1", "--with-api"]
