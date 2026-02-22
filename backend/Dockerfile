@@ -19,7 +19,7 @@ RUN dotnet restore "UndercutF1.Console/UndercutF1.Console.csproj"
 COPY . .
 WORKDIR "/src/UndercutF1.Console"
 ARG TARGETARCH
-RUN dotnet publish "UndercutF1.Console.csproj" -o /app/publish /p:PublicRelease=true /p:PublishTrimmed=false
+RUN dotnet publish "UndercutF1.Console.csproj" -o /app/publish /p:PublicRelease=true /p:PublishTrimmed=false /p:EnforceCodeStyleInBuild=false
 
 FROM base AS final
 WORKDIR /app
